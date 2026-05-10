@@ -1,17 +1,28 @@
 import streamlit as st
 import pandas as pd
+import sys
+import os
 
-# Add project root to Python path
-ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(ROOT_DIR)
+# -------------------------------------------------------------------
+# Fix Python path so we can import recommender.py from parent folder
+# -------------------------------------------------------------------
+parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+sys.path.append(parent_dir)
 
 from recommender import get_similar_courses, recommend_for_user
 
+# -------------------------------------------------------------------
 # Load data
-courses_df = pd.read_csv("data/courses.csv")
-bows_df = pd.read_csv("data/courses_bows.csv")
-ratings_df = pd.read_csv("data/ratings.csv")
+# -------------------------------------------------------------------
+DATA_DIR = os.path.join(parent_dir, "data")
 
+courses_df = pd.read_csv(os.path.join(DATA_DIR, "courses.csv"))
+bows_df = pd.read_csv(os.path.join(DATA_DIR, "courses_bows.csv"))
+ratings_df = pd.read_csv(os.path.join(DATA_DIR, "ratings.csv"))
+
+# -------------------------------------------------------------------
+# Streamlit UI
+# -------------------------------------------------------------------
 st.title("IBM ML Capstone – Course Recommender")
 
 mode = st.sidebar.selectbox("Recommendation Type", ["Content-Based", "User-Based"])
@@ -33,4 +44,5 @@ else:
             st.subheader(f"{r['title']} ({r['course_id']})")
             st.write(r["description"])
             st.write(f"Score: {r['score']:.3f}")
+
 
