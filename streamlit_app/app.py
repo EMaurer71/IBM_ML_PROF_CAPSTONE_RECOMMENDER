@@ -12,9 +12,11 @@ sys.path.append(ROOT_DIR)
 from recommender import get_similar_courses, recommend_for_user
 
 # ---------------------------------------------------------
-# Load data
+# Load data using absolute paths
 # ---------------------------------------------------------
 DATA_DIR = os.path.join(ROOT_DIR, "data")
+
+st.write("Loading data from:", DATA_DIR)  # Debug line
 
 courses_df = pd.read_csv(os.path.join(DATA_DIR, "courses.csv"))
 bows_df = pd.read_csv(os.path.join(DATA_DIR, "courses_bows.csv"))
@@ -44,3 +46,4 @@ else:
             st.subheader(f"{r['title']} ({r['course_id']})")
             st.write(r["description"])
             st.write(f"Score: {r['score']:.3f}")
+
