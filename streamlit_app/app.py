@@ -1,5 +1,10 @@
 import streamlit as st
 import pandas as pd
+
+# Add project root to Python path
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(ROOT_DIR)
+
 from recommender import get_similar_courses, recommend_for_user
 
 # Load data
